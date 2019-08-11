@@ -7,9 +7,11 @@
 require('./bootstrap');
 window.Vue = require('vue');
 import VeeValidate from 'vee-validate';
+import swal from 'sweetalert';
 
 // Vue.use(datatables)
 Vue.use(VeeValidate);
+window.swal=swal;
 // Vue.use(require('vuejs-datatable'));
 /**
  * The following block of code may be used to automatically register your

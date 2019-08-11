@@ -11,10 +11,15 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $article=Article::with('category')->get();
-        return $article;
+        if($request->ajax()){
+            return Article::with('category')->get();
+        }else{
+            return view('home');
+        }
+        // $article=Article::with('category')->get();
+        // return $article;
     }
 
     /**

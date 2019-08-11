@@ -46,13 +46,11 @@
                         <form @submit.prevent="editCategory(category)" v-if="editarActive">
                         <div class="modal-body">
                                 <input type="text" placeholder="Ingrese el nombre" data-vv-delay="100" class="form-control" id="nameModal" name="nameModal" v-model="category.name">
-
                                 <!-- <button class="btn btn-success mt-4 mb-4" type="submit">Guardar</button> -->
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" @click="returnCreate" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
                         </div>
                         </form>
                         </div>
@@ -103,6 +101,15 @@ export default {
                 }
                 axios.post('/category',params).then((res)=>{
                     this.get();
+                }).catch((error)=>{
+                    if(error.response.status==500){
+                        swal({
+                            title: "Error!",
+                            text: "La categoria ya existe!",
+                            icon: "error",
+                            button: "Intentar de nuevo!",
+                        });
+                    }
                 })
                 this.category.name="";
                  }
@@ -116,15 +123,27 @@ export default {
         },
         editCategory(item){
             // console.log(item);
-            const params={name:item.name}
-            axios.put(`/category/${item.id}`,params).then((res)=>{
-                this.get();
-            })
-            $('#editModal').modal('hide');
+            this.$validator.validateAll().then((result) => {
+                const params={name:item.name}
+                axios.put(`/category/${item.id}`,params).then((res)=>{
+                    this.get();
+                })
+                this.editarActive=false;
+                $('#editModal').modal('hide');
+            });
         },
         deleteCategory(item,index){
             axios.delete(`/category/${item}`).then((res)=>{
                 this.get();
+            }).catch((error)=>{
+                if(error.response.status==500){
+                    swal({
+                        title: "Error!",
+                        text: "Hay articulos con esta categoria!",
+                        icon: "error",
+                        button: "Salir!",
+                    });
+                }
             })
         }
     },

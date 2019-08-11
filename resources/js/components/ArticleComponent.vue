@@ -6,9 +6,18 @@
                 <h4>Agregar articulo</h4>
                 <form @submit.prevent="add">
                     <div class="form-group">
-                        <input type="text" placeholder="Ingrese categoria" data-vv-delay="100" v-validate="'required'" class="form-control" id="categoria" name="categoria" v-model="article.category_id">
+                        <select class="form-control" @click="dataSelect" v-model="selectData" v-validate="'required'" id="categoria" name="categoria">
+                            <option value="" selected disabled>Seleccione una categoria</option>
+                            <option v-for="(item,index) in select" :key="index" v-bind:value="item.id">
+                                {{item.category_name}}
+                            </option>
+                        </select>
                         <div v-show="errors.has('categoria')" class="helo-block alert alert-danger">{{ errors.first('categoria') }}</div>
                     </div>
+                    <!-- <div class="form-group">
+                        <input type="text" placeholder="Ingrese categoria" data-vv-delay="100" v-validate="'required'" class="form-control" id="categoria" name="categoria" v-model="article.category_id">
+                        <div v-show="errors.has('categoria')" class="helo-block alert alert-danger">{{ errors.first('categoria') }}</div>
+                    </div> -->
                     <div class="form-group">
                         <input type="number" placeholder="Numero de registro" data-vv-delay="100" v-validate="'required'" class="form-control" id="registro" name="registro" v-model="article.registry_number">
                         <div v-show="errors.has('registro')" class="helo-block alert alert-danger">{{ errors.first('registro') }}</div>
@@ -59,6 +68,8 @@ export default {
         return{
             articles:[],
             article:{category_id:"",registry_number:"",name:"",quantity:""},
+            select:[],
+            selectData:null
         }
     },
     created(){
@@ -72,6 +83,11 @@ export default {
         })
     },
     methods:{
+        dataSelect(){
+            axios.get('/category').then((res)=>{
+                this.select=res.data;
+            })
+        },
         get(){
             axios.get('/article').then((res)=>{
                 this.articles=res.data;
@@ -85,19 +101,29 @@ export default {
             this.$validator.validateAll().then((result) => {
                  if (result) {
                     const params={
-                    category_id:this.article.category_id,
+                    category_id:this.selectData,
                     registry_number:this.article.registry_number,
                     name:this.article.name,
                     quantity:this.article.quantity
                 }
                 axios.post('/article',params).then((res)=>{
-                    console.log(res);
-                     this.get();
-                })
-                    this.article.category_id="";
+                    this.get();
+                    this.selectData="";
                     this.article.registry_number="";
                     this.article.name="";
                     this.article.quantity="";
+                }).catch((error)=>{
+                     if(error.response.status==500){
+                        swal({
+                            title: "Error!",
+                            text: "El numero de registro ya existe!",
+                            icon: "error",
+                            button: "Intentar de nuevo!",
+                        });
+                        this.article.registry_number="";
+                    }
+                })
+
                     // console.log(this.articles);
                 }
             });
