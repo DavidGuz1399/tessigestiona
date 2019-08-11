@@ -192,6 +192,10 @@ export default {
                     this.get();
                 })
                 this.editarActive=false;
+                this.article.category_id="";
+                this.article.registry_number="";
+                this.article.name="";
+                this.article.quantity="";
                 $('#editModalArticle').modal('hide');
             });
         },

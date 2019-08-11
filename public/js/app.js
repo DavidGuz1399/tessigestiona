@@ -2050,6 +2050,10 @@ __webpack_require__.r(__webpack_exports__);
           _this5.get();
         });
         _this5.editarActive = false;
+        _this5.article.category_id = "";
+        _this5.article.registry_number = "";
+        _this5.article.name = "";
+        _this5.article.quantity = "";
         $('#editModalArticle').modal('hide');
       });
     },
