@@ -3,7 +3,7 @@
 namespace Tessigestiona\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Tessigestiona\Article;
 class ArticleController extends Controller
 {
     /**
@@ -13,7 +13,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        $article=Article::with('category')->get();
+        return $article;
     }
 
     /**
@@ -34,7 +35,13 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $article=new Article();
+        $article->category_id=$request->category_id;
+        $article->registry_number=$request->registry_number;
+        $article->name=$request->name;
+        $article->quantity=$request->quantity;
+        $article->save();
+        return $article;
     }
 
     /**
@@ -79,6 +86,7 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $article=Article::find($id);
+        $article->delete();
     }
 }

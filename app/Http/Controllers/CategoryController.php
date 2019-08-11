@@ -3,7 +3,7 @@
 namespace Tessigestiona\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Tessigestiona\Category;
 class CategoryController extends Controller
 {
     /**
@@ -11,9 +11,13 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if($request->ajax()){
+            return Category::all();
+        }else{
+            return view('home');
+        }
     }
 
     /**
@@ -34,7 +38,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category=new Category();
+        $category->category_name=$request->name;
+        $category->save();
+        return $category;
     }
 
     /**
@@ -68,7 +75,10 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category=Category::find($id);
+        $category->category_name=$request->name;
+        $category->save();
+        return $category;
     }
 
     /**
@@ -79,6 +89,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category=Category::find($id);
+        $category->delete();
     }
 }

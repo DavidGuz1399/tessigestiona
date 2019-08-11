@@ -18,8 +18,8 @@ class CreateArticlesTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->string('registry_number')->unique();
-            $table->string("nombre");
-            $table->integer("cantidad");
+            $table->string("name");
+            $table->integer("quantity");
             $table->timestamps();
         });
     }

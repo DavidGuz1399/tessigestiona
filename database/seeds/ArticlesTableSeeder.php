@@ -15,8 +15,8 @@ class ArticlesTableSeeder extends Seeder
         DB::table('articles')->insert([
             'category_id'=>1,
             'registry_number'=>"15463",
-            'nombre'=>'Teclado',
-            'cantidad'=>12345
+            'name'=>'Teclado',
+            'quantity'=>12345
         ]);
     }
 }
