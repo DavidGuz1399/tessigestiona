@@ -80,7 +80,13 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $article=Article::find($id);
+        $article->category_id=$request->category_id;
+        $article->registry_number=$request->registry_number;
+        $article->name=$request->name;
+        $article->quantity=$request->quantity;
+        $article->save();
+        return $article;
     }
 
     /**

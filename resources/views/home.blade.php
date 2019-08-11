@@ -3,8 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <category></category>
+        <category-component></category-component>
         <article-component></article-component>
+        <report-component></report-component>
     </div>
 </div>
 @endsection
