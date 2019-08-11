@@ -111,17 +111,14 @@ export default {
             articles:[],
             article:{category_id:"",registry_number:"",name:"",quantity:""},
             select:[],
-            selectData:null,
             editarActive:false
         }
     },
     created(){
         axios.get('/article').then((res)=>{
-            console.log(res);
             this.articles=res.data;
             $(document).ready( function () {
                 $('#tableArticle').DataTable();
-                 console.log(this.categories);
             });
         })
     },
@@ -172,7 +169,7 @@ export default {
             });
         },
         edit(item){
-            this.$validator.reset();
+            this.$validator.pause();
             this.editarActive=true;
             this.article.category_id=item.category_id;
             this.article.registry_number=item.registry_number;
@@ -189,7 +186,6 @@ export default {
             $('#editModalArticle').modal('hide');
         },
         editArticle(item){
-            console.log(item);
             this.$validator.validateAll().then((result) => {
                 const params={category_id:item.category_id,registry_number:item.registry_number,name:item.name,quantity:item.quantity}
                 axios.put(`/article/${item.id}`,params).then((res)=>{
@@ -207,6 +203,3 @@ export default {
     }
 }
 </script>
-<style>
-
-</style>

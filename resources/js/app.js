@@ -8,6 +8,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 import VeeValidate from 'vee-validate';
 import swal from 'sweetalert';
+import 'vue-date-pick/dist/vueDatePick.css';
 
 // Vue.use(datatables)
 Vue.use(VeeValidate);

@@ -28,6 +28,7 @@
         "datatables.net-bs4": "^1.10.19",
         "sweetalert": "^2.1.2",
         "vee-validate": "^2.2.14",
+        "vue-date-pick": "^1.2.1",
         "vuejs-datatable": "^1.7.0",
         "vuelidate": "^0.7.4"
     }

@@ -100,4 +100,7 @@ class ArticleController extends Controller
         $article=Article::find($id);
         $article->delete();
     }
+    public function filterArticle(Request $request){
+        return Article::with('category')->whereBetween('created_at', array($request->dateStart, $request->dateEnd))->get();
+    }
 }

@@ -20,3 +20,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/category', 'CategoryController')->middleware('auth');
 Route::resource('/article', 'ArticleController')->middleware('auth');
+Route::get('/filter','ArticleController@filterArticle')->middleware('auth');

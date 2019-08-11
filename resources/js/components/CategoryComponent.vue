@@ -116,7 +116,7 @@ export default {
              });
         },
         edit(item){
-            this.$validator.reset();
+            this.$validator.pause();
             this.editarActive=true;
             this.category.name=item.category_name;
             this.category.id=item.id;
